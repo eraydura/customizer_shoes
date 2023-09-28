@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/customizer_shoes/static/css/main.30e4c844.css",
+    "main.js": "/customizer_shoes/static/js/main.b6ede8ee.js",
+    "static/js/787.6e7f6ceb.chunk.js": "/customizer_shoes/static/js/787.6e7f6ceb.chunk.js",
+    "index.html": "/customizer_shoes/index.html",
+    "main.30e4c844.css.map": "/customizer_shoes/static/css/main.30e4c844.css.map",
+    "main.b6ede8ee.js.map": "/customizer_shoes/static/js/main.b6ede8ee.js.map",
+    "787.6e7f6ceb.chunk.js.map": "/customizer_shoes/static/js/787.6e7f6ceb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.30e4c844.css",
+    "static/js/main.b6ede8ee.js"
+  ]
+}
