@@ -17,7 +17,7 @@
   position: absolute;
 	width: 20%;
   height: 5%;
-  top: 5%;
+  top: 2%;
 	display:block;
 }
 .card {
@@ -65,7 +65,7 @@ input[type=color]::-webkit-color-swatch-wrapper {
 }
 
 input[type=color] {
-  margin-top: 5%;
+  margin-top: 2%;
   width: 100px;
   height: 100px; 
   border-radius: 50%;

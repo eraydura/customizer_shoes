@@ -1,13 +1,14 @@
-import {Suspense,useState} from 'react'
+import {Suspense,useState,useRef, useEffect} from 'react'
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls,useGLTF,Environment, ContactShadows,useTexture } from '@react-three/drei';
 
 
 function Model(props) {
   
+  const group = useRef()
   const { nodes, materials } = useGLTF('./gltf/shoe.gltf')
   return (
-    <group {...props} dispose={null}>
+    <group ref={group} {...props} dispose={null}>
       <mesh material-metalness={1.0} material-roughness={1.0} material-map={useTexture(props.customColors.stripestexture)} geometry={nodes.shoe.geometry} material={materials.laces} material-color={props.customColors.stripes}/>
       <mesh material-metalness={1.0} material-roughness={1.0} material-map={useTexture(props.customColors.meshtexture)} geometry={nodes.shoe_1.geometry} material={materials.mesh}  material-color={props.customColors.mesh}/>
       <mesh material-metalness={1.0} material-roughness={1.0} material-map={useTexture(props.customColors.soultexture)} geometry={nodes.shoe_2.geometry} material={materials.caps}  material-color={props.customColors.soul}/>
@@ -21,7 +22,7 @@ function Model(props) {
 }
 
 function App() {
-  var texture = ["./gltf/textures/texture1.jpg", "./gltf/textures/texture.jpg", "./gltf/textures/texture2.jpg",  "./gltf/textures/texture3.jpg", "./gltf/textures/texture1.jpg"];
+  var texture = ["./gltf/textures/Empty.png","./gltf/textures/texture1.jpg", "./gltf/textures/texture.jpg", "./gltf/textures/texture2.jpg",  "./gltf/textures/texture3.jpg", "./gltf/textures/texture1.jpg"];
 
   const [mesh,setMesh] = useState("#ffffff")
   const [index,setIndex] = useState(0)
@@ -43,30 +44,28 @@ function App() {
   }
 
   function next(){
-    if(index<3){
+    if(index<4){
       setIndex(index+1);
-      if(part=="stripes"){
-        setStripesTexture(texture[index+1]);
-      }else if(part=="mesh"){
-        setMeshTexture(texture[index+1]);
-      }else{
-        setSoulTexture(texture[index+1]);
-      }
     }
   }
 
   function prev(){
     if(index-1>=0){
       setIndex(index-1);
-      if(part=="stripes"){
-        setStripesTexture(texture[index-1]);
-      }else if(part=="mesh"){
-        setMeshTexture(texture[index-1]);
-      }else{
-        setSoulTexture(texture[index-1]);
-      }
     }
   }
+
+
+
+  useEffect(() => {
+    if(part==="stripes"){
+      setStripesTexture(texture[index]);
+    }else if(part==="mesh"){
+      setMeshTexture(texture[index]);
+    }else {
+      setSoulTexture(texture[index]);
+    }
+  },[index,part]);
 
   return (
     <div className="App">
@@ -87,6 +86,8 @@ function App() {
                 </div>
             </div>
             <div className='colors'>
+              <div>
+                <span>Color Select</span>
                 <div className='image2'>
                   {(() => {
                     if (part=="mesh") {
@@ -104,7 +105,11 @@ function App() {
                     }
                   })()}
                   </div>
+              </div>
+
                   <span className="divider" />
+                  <div>
+                    <span>Texture Select</span>
                   <div className='image'>
                            <img onClick={prev} src="https://thenounproject.com/api/private/icons/3554040/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0"/>
                            {(() => {
@@ -134,6 +139,8 @@ function App() {
                             })()}
                            <img onClick={next} src="https://thenounproject.com/api/private/icons/3551157/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0"/>
                   </div>
+                  </div>
+                  
                       <div className='dropdown'>
                           <select onChange={e => dropDownChanged(e)} >
                             <option value="1">Base</option>
