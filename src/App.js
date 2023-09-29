@@ -4,25 +4,24 @@ import { OrbitControls,useGLTF,Environment, ContactShadows,useTexture } from '@r
 
 
 function Model(props) {
-  
-  const group = useRef()
+
   const { nodes, materials } = useGLTF('./gltf/shoe.gltf')
   return (
-    <group ref={group} {...props} dispose={null}>
-      <mesh material-metalness={1.0} material-roughness={1.0} material-map={useTexture(props.customColors.stripestexture)} geometry={nodes.shoe.geometry} material={materials.laces} material-color={props.customColors.stripes}/>
-      <mesh material-metalness={1.0} material-roughness={1.0} material-map={useTexture(props.customColors.meshtexture)} geometry={nodes.shoe_1.geometry} material={materials.mesh}  material-color={props.customColors.mesh}/>
-      <mesh material-metalness={1.0} material-roughness={1.0} material-map={useTexture(props.customColors.soultexture)} geometry={nodes.shoe_2.geometry} material={materials.caps}  material-color={props.customColors.soul}/>
-      <mesh material-metalness={1.0} material-roughness={1.0} material-map={useTexture(props.customColors.soultexture)} geometry={nodes.shoe_3.geometry} material={materials.inner} material-color={props.customColors.soul} />
-      <mesh material-metalness={1.0} material-roughness={1.0} material-map={useTexture(props.customColors.soultexture)} geometry={nodes.shoe_4.geometry} material={materials.sole} material-color={props.customColors.soul}/>
-      <mesh material-metalness={1.0} material-roughness={1.0} material-map={useTexture(props.customColors.stripestexture)} geometry={nodes.shoe_5.geometry} material={materials.stripes} material-color={props.customColors.stripes}/>
-      <mesh material-metalness={1.0} material-roughness={1.0} material-map={useTexture(props.customColors.stripestexture)} geometry={nodes.shoe_6.geometry} material={materials.band} material-color={props.customColors.stripes}/>
-      <mesh material-metalness={1.0} material-roughness={1.0} material-map={useTexture(props.customColors.soultexture)} geometry={nodes.shoe_7.geometry} material={materials.patch} material-color={props.customColors.soul}/>
+    <group {...props} >
+      <mesh material-metalness={1.0} material-roughness={1.0} geometry={nodes.shoe.geometry} material={materials.laces} material-color={props.customColors.stripes}>  <meshStandardMaterial map={useTexture(props.customColors.stripestexture)} /></mesh>
+      <mesh material-metalness={1.0} material-roughness={1.0} geometry={nodes.shoe_1.geometry} material={materials.mesh}  material-color={props.customColors.mesh}>     <meshStandardMaterial map={useTexture(props.customColors.meshtexture)} /></mesh>
+      <mesh material-metalness={1.0} material-roughness={1.0} geometry={nodes.shoe_2.geometry} material={materials.caps}  material-color={props.customColors.soul}>     <meshStandardMaterial map={useTexture(props.customColors.soultexture)} /></mesh>
+      <mesh material-metalness={1.0} material-roughness={1.0} geometry={nodes.shoe_3.geometry} material={materials.inner} material-color={props.customColors.soul} >     <meshStandardMaterial map={useTexture(props.customColors.soultexture)} /></mesh>
+      <mesh material-metalness={1.0} material-roughness={1.0} geometry={nodes.shoe_4.geometry} material={materials.sole} material-color={props.customColors.soul}>     <meshStandardMaterial map={useTexture(props.customColors.soultexture)} /></mesh>
+      <mesh material-metalness={1.0} material-roughness={1.0} geometry={nodes.shoe_5.geometry} material={materials.stripes} material-color={props.customColors.stripes}>  <meshStandardMaterial map={useTexture(props.customColors.stripestexture)} /></mesh>
+      <mesh material-metalness={1.0} material-roughness={1.0} geometry={nodes.shoe_6.geometry} material={materials.band} material-color={props.customColors.stripes}>  <meshStandardMaterial map={useTexture(props.customColors.stripestexture)} /></mesh>
+      <mesh material-metalness={1.0} material-roughness={1.0}  geometry={nodes.shoe_7.geometry} material={materials.patch} material-color={props.customColors.soul}>     <meshStandardMaterial map={useTexture(props.customColors.soultexture)} /></mesh>
     </group>
   )
 }
 
 function App() {
-  var texture = ["./gltf/textures/Empty.png","./gltf/textures/texture1.jpg", "./gltf/textures/texture.jpg", "./gltf/textures/texture2.jpg",  "./gltf/textures/texture3.jpg", "./gltf/textures/texture1.jpg"];
+  const texture = ["./gltf/textures/Empty.png","./gltf/textures/texture1.jpg", "./gltf/textures/texture.jpg", "./gltf/textures/texture2.jpg",  "./gltf/textures/texture3.jpg", "./gltf/textures/texture1.jpg"];
 
   const [mesh,setMesh] = useState("#ffffff")
   const [index,setIndex] = useState(0)
@@ -34,9 +33,9 @@ function App() {
   const [soultexture,setSoulTexture] = useState(texture[index])
 
   function dropDownChanged(e) {
-    if (e.target.value == "1") {
+    if (e.target.value === "1") {
       setPart("mesh");
-    }else if(e.target.value == "2"){
+    }else if(e.target.value === "2"){
       setPart("stripes");
     }else{
       setPart("soul");
@@ -50,7 +49,7 @@ function App() {
   }
 
   function prev(){
-    if(index-1>=0){
+    if(index-1>0){
       setIndex(index-1);
     }
   }
@@ -62,7 +61,7 @@ function App() {
       setStripesTexture(texture[index]);
     }else if(part==="mesh"){
       setMeshTexture(texture[index]);
-    }else {
+    }else if(part==="soul") {
       setSoulTexture(texture[index]);
     }
   },[index,part]);
@@ -90,11 +89,11 @@ function App() {
                 <span>Color Select</span>
                 <div className='image2'>
                   {(() => {
-                    if (part=="mesh") {
+                    if (part==="mesh") {
                       return (
                             <input type="color" className='colorselect' id="mesh" name="mesh" value={mesh} onChange={(e) => setMesh(e.target.value)}/>
                       )
-                    } else if (part=="stripes") {
+                    } else if (part==="stripes") {
                       return (
                            <input type="color" className='colorselect'  id="stripes" name="stripes" value={stripe} onChange={(e) => setStripes(e.target.value)}/>
                       )
