@@ -1,4 +1,4 @@
-npm install -g gltfjsx
+sudo npm install -g gltfjsx
 #
 gltfjsx /path/to/shoe.gltf --use-dynamic --types
 #
